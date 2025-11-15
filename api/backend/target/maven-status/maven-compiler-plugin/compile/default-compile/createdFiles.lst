@@ -1,0 +1,17 @@
+com\gestordocs\authservice\model\LoginResponse.class
+com\gestordocs\authservice\service\DocumentoService.class
+com\gestordocs\authservice\model\RolEntity.class
+com\gestordocs\authservice\config\CorsConfig.class
+com\gestordocs\authservice\model\LoginRequest.class
+com\gestordocs\authservice\repository\DocumentoRepository.class
+com\gestordocs\authservice\service\ServicioToken.class
+com\gestordocs\authservice\repository\UsuarioRepository.class
+com\gestordocs\authservice\service\AuthService.class
+com\gestordocs\authservice\model\Rol.class
+com\gestordocs\authservice\model\Permiso.class
+com\gestordocs\authservice\model\Documento.class
+com\gestordocs\authservice\controller\AuthController.class
+com\gestordocs\authservice\repository\RolRepository.class
+com\gestordocs\authservice\SaddaBackendApplication.class
+com\gestordocs\authservice\controller\DocumentoController.class
+com\gestordocs\authservice\model\Usuario.class

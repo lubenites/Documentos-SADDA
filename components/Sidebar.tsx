@@ -32,15 +32,21 @@ const Sidebar: React.FC = () => {
     
     const tienePermisoParaVista = (vistaId: string) => {
       const permisos = usuarioLogueado.permisos;
+      
+      // Convertir permisos a strings si vienen como objetos del backend
+      const permisosStrings = permisos.map(p => 
+        typeof p === 'string' ? p : p.nombre
+      );
+      
       switch(vistaId) {
-        case 'registrar': return permisos.includes(Permiso.REGISTRAR_DOCUMENTO_VENTAS);
-        case 'anexar': return permisos.some(p => p.startsWith('anexar-documento'));
-        case 'seguimiento': return permisos.some(p => p.startsWith('acceso-seguimiento'));
-        case 'busqueda': return permisos.some(p => p.startsWith('acceso-busqueda'));
-        case 'reportes': return permisos.some(p => p.startsWith('acceso-reportes'));
-        case 'auditoria': return permisos.some(p => p.startsWith('acceso-auditoria'));
-        case 'usuarios': return permisos.includes(Permiso.GESTIONAR_USUARIOS);
-        case 'roles': return permisos.includes(Permiso.GESTIONAR_ROLES);
+        case 'registrar': return permisosStrings.includes('CREATE_DOCUMENT') || permisosStrings.includes(Permiso.REGISTRAR_DOCUMENTO_VENTAS);
+        case 'anexar': return permisosStrings.some(p => p.includes('DOCUMENT')) || permisosStrings.some(p => p.startsWith('anexar-documento'));
+        case 'seguimiento': return permisosStrings.some(p => p.includes('VIEW')) || permisosStrings.some(p => p.startsWith('acceso-seguimiento'));
+        case 'busqueda': return permisosStrings.some(p => p.includes('VIEW')) || permisosStrings.some(p => p.startsWith('acceso-busqueda'));
+        case 'reportes': return permisosStrings.some(p => p.includes('VIEW_AUDIT')) || permisosStrings.some(p => p.startsWith('acceso-reportes'));
+        case 'auditoria': return permisosStrings.includes('VIEW_AUDIT') || permisosStrings.some(p => p.startsWith('acceso-auditoria'));
+        case 'usuarios': return permisosStrings.includes('MANAGE_USERS') || permisosStrings.includes(Permiso.GESTIONAR_USUARIOS);
+        case 'roles': return permisosStrings.includes('MANAGE_ROLES') || permisosStrings.includes(Permiso.GESTIONAR_ROLES);
         default: return false;
       }
     }

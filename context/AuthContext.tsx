@@ -19,11 +19,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const iniciarSesion = async (email: string, password: string): Promise<boolean> => {
     setCargando(true);
     try {
+      console.log('🔐 AuthContext: Iniciando sesión para', email);
       const usuarioLogueado = await servicioAuth.iniciarSesion(email, password);
+      console.log('✅ AuthContext: Usuario obtenido:', usuarioLogueado);
       if (usuarioLogueado) {
+        console.log('✅ AuthContext: Guardando usuario en estado');
         setUsuario(usuarioLogueado);
         return true;
       }
+      console.error('❌ AuthContext: No se obtuvo usuario');
+      return false;
+    } catch (error) {
+      console.error('❌ AuthContext: Error en autenticación:', error);
       return false;
     } finally {
       setCargando(false);
