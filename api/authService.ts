@@ -14,26 +14,26 @@ export const servicioAuth = {
       });
 
       if (!response.ok) {
-        console.error('Error en autenticación:', response.status);
+        const errorBody = await response.json().catch(() => null);
+        console.error('❌ Error en login:', response.status, errorBody);
         return null;
       }
 
       const data = await response.json();
-      console.log("TOKEN recibido:", data.token);
+      console.log('✅ Respuesta de login:', data);
 
-      // Guardar token
-      localStorage.setItem("token", data.token);
-
+      // ¡OJO! aquí usamos userID, no userId
       return {
-        id: data.userId,
+        id: data.userID,
         nombres: data.nombres,
         apellidos: data.apellidos,
-        email: email,
-        rolId: data.rolId,
+        email: data.email ?? email,
+        rolId: Number(data.rolId),
+        permisos: data.permisos ?? [],
       };
 
     } catch (error) {
-      console.error("Error conectando al backend:", error);
+      console.error('Error conectando al backend:', error);
       return null;
     }
   }
